@@ -1,6 +1,4 @@
 - hosts: all
-  vars_files:
-    - host_vars/instance_var.yaml
   gather_facts: true
 
   roles:
