@@ -1,0 +1,11 @@
+---
+- name: upload sub script
+  become: yes
+  copy:
+    src: ./sub.sh
+    dest: /home/ubuntu/
+    mode: 0777
+
+- name: execute master script
+  become: yes
+  ansible.builtin.shell: /home/ubuntu/sub.sh

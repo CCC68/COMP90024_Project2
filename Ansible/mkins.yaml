@@ -9,4 +9,5 @@
     - role: openstack-common
     - role: openstack-images
     - role: openstack-volume
+    - role: openstack-security-group
     - role: openstack-instance
