@@ -2,10 +2,14 @@
 - name: upload master script
   become: yes
   copy:
-    src: ./master.sh
+    src: ./db-test.sh
     dest: /home/ubuntu/
     mode: 0777
 
 - name: execute master script
   become: yes
-  ansible.builtin.shell: /home/ubuntu/masternode.sh
+  ansible.builtin.shell: /home/ubuntu/db-test.sh
+  register: out
+
+- debug: 
+    msg: '{{ out.stdout }}'

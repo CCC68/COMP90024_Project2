@@ -33,20 +33,27 @@ security_groups:
     port_range_max: 5994
     remote_ip_prefix: 0.0.0.0/0
 
+
+
 # Instance
 instances:
   - name: ins-1
     volumes: ['vol-instance1']
     flavor: uom.mse.1c4g
+    nics: "net-name=qh2-uom-internal"
   - name: ins-2
     volumes: ['vol-instance2']
     flavor: uom.mse.2c9g
+    nics: "net-name=qh2-uom-internal"
   - name: ins-3
     volumes: ['vol-instance3']
     flavor: uom.mse.2c9g
+    nics: "net-name=qh2-uom-internal"
   - name: ins-4
     volumes: ['vol-instance4']
     flavor: uom.mse.2c9g
+    nics: "net-name=qh2-uom-internal"
+# "net-name=qh2-uom-internal,net-name=qh2-uom,net-name=Classic Provider"
 
 instance_image: NeCTAR Ubuntu 18.04 LTS (Bionic) amd64 (with Docker)
-instance_key: group-68-key
+instance_key: group-68-key-v2

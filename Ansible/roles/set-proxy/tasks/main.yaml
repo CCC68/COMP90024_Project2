@@ -8,7 +8,7 @@
       HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/
       http_proxy=http://wwwproxy.unimelb.edu.au:8000/
       https_proxy=http://wwwproxy.unimelb.edu.au:8000/
-      no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au,ins1,ins2,ins3,ins4
+      no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au
 
 # Update environment variable require re-login, confirm change
 - name: confirm proxy change
@@ -28,7 +28,7 @@
       Environment="HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/"
       Environment="http_proxy=http://wwwproxy.unimelb.edu.au:8000/"
       Environment="https_proxy=http://wwwproxy.unimelb.edu.au:8000/"
-      Environment="no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au,ins1,ins2,ins3,ins4"
+      Environment="no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
 
 - name: restart docker daemon
   become: yes
