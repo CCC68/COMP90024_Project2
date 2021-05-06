@@ -4,3 +4,4 @@ Ansible/.DS_Store
 Ansible/roles/.DS_Store
 Ansible/roles/openstack-images/.DS_Store
 Ansible/roles/openstack-instance/.DS_Store
+Ansible/roles/.DS_Store
