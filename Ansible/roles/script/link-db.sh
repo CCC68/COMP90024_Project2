@@ -6,8 +6,8 @@ export declare -a nodes=(172.26.132.118 172.26.133.73 172.26.132.112)
 export masternode=`echo ${nodes} | cut -f1 -d' '`
 export declare -a othernodes=`echo ${nodes[@]} | sed s/${masternode}//`
 export size=${#nodes[@]}
-export user='user'
-export pass='pass'
+export user='adm1n_c0uchd6'
+export pass='_gr0up68H1_'
 export VERSION='3.1.1'
 export cookie='fckcouchdb'
 
