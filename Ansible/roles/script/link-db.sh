@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "===== Linking Databse Cluster ====="
 echo "\n"
 echo "===== Setting Environmental Varibles ====="

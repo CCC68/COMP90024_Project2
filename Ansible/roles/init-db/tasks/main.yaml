@@ -2,50 +2,44 @@
 - name: upload script to ins-2
   become: yes
   copy:
-    src: ../script/db-ins-2.sh
+    src: '{{ item }}'
     dest: /home/ubuntu/
     mode: 0777
-  when: inventory_hostname == "ins-2"
+  when: ansible_hostname == "ins-2"
+  loop:
+    - ../script/init-db-ins2.yml
+    - ../script/link-db.sh
 
 - name: upload script to ins-3
   become: yes
   copy:
-    src: ../script/db-ins-3.sh
-    dest: /home/ubuntu/
+    src: ../script/init-db-ins3.yml
+    dest: /home/ubuntu/docker-compose.yml
     mode: 0777
-  when: inventory_hostname == "ins-3"
+  when: ansible_hostname == "ins-3"
 
 - name: upload script to ins-4
   become: yes
   copy:
-    src: ../script/db-ins-4.sh
-    dest: /home/ubuntu/
+    src: ../script/init-db-ins4.yml
+    dest: /home/ubuntu/docker-compose.yml
     mode: 0777
-  when: inventory_hostname == "ins-4"
+  when: ansible_hostname == "ins-4"
 
-- name: execute script 1/3
+- name: execute script 1/2
   become: yes
-  ansible.builtin.shell: /home/ubuntu/db-ins-4.sh
+  ansible.builtin.shell: docker-compose up -d 
+  when: (ansible_hostname == "ins-3") or (ansible_hostname == "ins-4") 
+
+- name: execute script 2/2
+  become: yes
+  ansible.builtin.shell: |
+    mv /home/ubuntu/init-db-ins2.yml /home/ubuntu/docker-compose.yml
+    docker-compose up -d 
+    /home/ubuntu/link-db.sh
   register: out
-  when: inventory_hostname == "ins-4"
+  when: ansible_hostname == "ins-2"
 
 - debug: 
     msg: '{{ out.stdout }}'
-
-- name: execute script 2/3
-  become: yes
-  ansible.builtin.shell: /home/ubuntu/db-ins-3.sh
-  register: out
-  when: inventory_hostname == "ins-3"
-
-- debug: 
-    msg: '{{ out.stdout }}'
-
-- name: execute script 3/3
-  become: yes
-  ansible.builtin.shell: /home/ubuntu/db-ins-2.sh
-  register: out
-  when: inventory_hostname == "ins-2"
-
-- debug: 
-    msg: '{{ out.stdout }}'
+  when: ansible_hostname == "ins-2"
