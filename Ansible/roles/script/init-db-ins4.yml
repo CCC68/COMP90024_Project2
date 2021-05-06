@@ -1,6 +1,6 @@
-version: "1"
+version: "3"
 services:
-  couch_master:
+  couch_worker_ins4:
     image: "couchdb"
     restart: always
     ports:
@@ -11,7 +11,7 @@ services:
     volumes:
       - /data:/opt/couchdb/data
     environment:
-      - COUCHDB_USER=adm1n_c0uchdb
+      - COUCHDB_USER=adm1n_c0uchd6
       - COUCHDB_PASSWORD=_gr0up68H1_
       - NODENAME=172.26.132.112
       - COUCHDB_COOKIE=fckcouchdb

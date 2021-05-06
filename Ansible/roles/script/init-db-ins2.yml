@@ -1,6 +1,6 @@
-version: "1"
+version: "3"
 services:
-  couch_master:
+  couch_manager_ins2:
     image: "couchdb"
     restart: always
     ports:
