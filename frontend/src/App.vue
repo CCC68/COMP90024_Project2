@@ -1,26 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <header id="nav" class="p-3 bg-dark text-white d-flex">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center">
+          <span class="me-md-auto">Project Logo</span>
+          <ul class="nav">
+            <router-link
+              v-for="route in routes"
+              class="nav-link text-white"
+              :to="route.path"
+              :key="route.name"
+            >
+              {{ route.name }}
+            </router-link>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <router-view />
+  </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  setup() {},
+  data() {
+    return {
+      routes: [],
+    };
+  },
+  beforeMount() {
+    this.routes = this.$router.options.routes;
+    console.log(this.$router)
+  },
+};
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#nav {
+  position: relative;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+.views {
+  display: flex;
+}
+.view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
 }
 </style>
