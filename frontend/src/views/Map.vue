@@ -18,7 +18,7 @@ export default {
   setup() {},
   data() {
     return {
-      cites: ["Melbourne", "Sydney", "Brisbane"],
+      cites: ["Melbourne", "Sydney", "Brisbane", "Finland"],
     };
   },
   beforeMount() {
@@ -59,6 +59,8 @@ export default {
         case "Brisbane":
           coords = { lat: -27.4673, lng: 153.0233 };
           break;
+        case "Finland":
+          coords = { lat: 60.192059, lng: 24.945831 };
       }
       window.map.setZoom(10);
       window.map.setCenter(coords);
