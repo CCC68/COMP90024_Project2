@@ -1,0 +1,75 @@
+lga_name, lga_code, obese_p_1_count
+"Aurukun (S)",30250,null
+"Balonne (S)",30300,1430
+"Banana (S)",30370,3827
+"Barcaldine (R)",30410,null
+"Barcoo (S)",30450,null
+"Blackall Tambo (R)",30760,null
+"Central Highlands (R)",32270,7786
+"Charters Towers (R)",32310,3476
+"Ipswich (C)",33960,46167
+"Isaac (R)",33980,5603
+"Kowanyama (S)",34420,null
+"Lockhart River (S)",34570,null
+"Lockyer Valley (R)",34580,10192
+"Logan (C)",34590,72861
+"Longreach (R)",34710,null
+"Mackay (R)",34770,30815
+"Boulia (S)",30900,null
+"Brisbane (C)",31000,201250
+"McKinlay (S)",34800,null
+"Bulloo (S)",31750,null
+"Bundaberg (R)",31820,26962
+"Burdekin (S)",31900,4823
+"Burke (S)",31950,null
+"Cairns (R)",32070,38387
+"Carpentaria (S)",32250,null
+"Cassowary Coast (R)",32260,8588
+"Cherbourg (S)",32330,430
+"Cloncurry (S)",32450,null
+"Cook (S)",32500,null
+"Croydon (S)",32600,null
+"Gold Coast (C)",33430,119742
+"Goondiwindi (R)",33610,3220
+"Gympie (R)",33620,14061
+"Pormpuraaw (S)",36070,null
+"Diamantina (S)",32750,null
+"Hinchinbrook (S)",33800,3304
+"Hope Vale (S)",33830,null
+"Quilpie (S)",36150,null
+"Doomadgee (S)",32770,null
+"Etheridge (S)",33100,null
+"Flinders (S)",33200,null
+"Fraser Coast (R)",33220,29651
+"Gladstone (R)",33360,16566
+"Mapoon (S)",34830,null
+"Maranoa (R)",34860,3883
+"Moreton Bay (R)",35010,99511
+"Mornington (S)",35250,null
+"Mount Isa (C)",35300,5151
+"Murweh (S)",35600,null
+"Napranum (S)",35670,null
+"North Burnett (R)",35760,3326
+"Northern Peninsula Area (R)",35780,null
+"Redland (C)",36250,34150
+"Richmond (S)",36300,null
+"Rockhampton (R)",36360,31246
+"Scenic Rim (R)",36510,10199
+"Somerset (R)",36580,5986
+"South Burnett (R)",36630,9799
+"Southern Downs (R)",36660,9903
+"Sunshine Coast (R)",36710,78304
+"Tablelands (R)",36810,10913
+"Toowoomba (R)",36910,43237
+"Torres (S)",36950,null
+"Torres Strait Island (R)",36960,null
+"Townsville (C)",37010,42888
+"Palm Island (S)",35790,668
+"Paroo (S)",35800,null
+"Weipa (T)",37300,null
+"Western Downs (R)",37310,9504
+"Whitsunday (R)",37340,8502
+"Winton (S)",37400,null
+"Woorabinda (S)",37550,null
+"Wujal Wujal (S)",37570,null
+"Yarrabah (S)",37600,714
