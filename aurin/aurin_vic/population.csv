@@ -1,81 +1,81 @@
  lga_code16, lga_name16,erp_2016pr
-20110, Alpine (S),12450
-20260, Ararat (RC),11707
-20570, Ballarat (C),103407
-20660, Banyule (C),127693
-20740, Bass Coast (S),33317
-20830, Baw Baw (S),49008
-20910, Bayside (C),102737
-21010, Benalla (RC),13962
-21110, Boroondara (C),177361
-21180, Brimbank (C),205741
-21270, Buloke (S),6230
-21370, Campaspe (S),37429
-21450, Cardinia (S),97625
-21610, Casey (C),313521
-21670, Central Goldfields (S),13012
-21750, Colac-Otway (S),21359
-21830, Corangamite (S),16133
-21890, Darebin (C),155022
-22110, East Gippsland (S),45426
-22170, Frankston (C),139511
-22250, Gannawarra (S),10563
-22830, Greater Shepparton (C),65076
-22910, Hepburn (S),15560
-22980, Hindmarsh (S),5741
-23110, Hobsons Bay (C),93392
-23190, Horsham (RC),19817
-23270, Hume (C),207830
-23350, Indigo (S),16035
-23430, Kingston (C) (Vic.),159023
-23670, Knox (C),160665
-23810, Latrobe (C) (Vic.),74329
-23940, Loddon (S),7555
-24130, Macedon Ranges (S),47512
-24210, Manningham (C),122902
-24250, Mansfield (S),8605
-24330, Maribyrnong (C),87355
-24410, Maroondah (C),114979
-24600, Melbourne (C),148039
-24650, Melton (C),141749
-24780, Mildura (RC),54564
-24850, Mitchell (S),41632
-24900, Moira (S),29306
-24970, Monash (C),192850
-25060, Moonee Valley (C),122968
-25150, Moorabool (S),32658
-25250, Moreland (C),172091
-25340, Mornington Peninsula (S),160862
-22670, Greater Dandenong (C),160952
-22750, Greater Geelong (C),238603
-25430, Mount Alexander (S),18966
-25490, Moyne (S),16693
-25620, Murrindindi (S),13993
-25710, Nillumbik (S),64280
-25810, Northern Grampians (S),11577
-22310, Glen Eira (C),149012
-22410, Glenelg (S),19726
-22490, Golden Plains (S),21929
-22620, Greater Bendigo (C),111783
-25900, Port Phillip (C),108558
-25990, Pyrenees (S),7301
-26080, Queenscliffe (B),2904
-26170, South Gippsland (S),28936
-26260, Southern Grampians (S),16066
-26350, Stonnington (C),111606
-26430, Strathbogie (S),10329
-26490, Surf Coast (S),30445
-26610, Swan Hill (RC),20904
-26670, Towong (S),5973
-26700, Wangaratta (RC),28559
-26730, Warrnambool (C),34245
-26810, Wellington (S),43465
-26890, West Wimmera (S),3912
-26980, Whitehorse (C),170093
-27070, Whittlesea (C),207881
-27170, Wodonga (C),39844
-27260, Wyndham (C),228088
-27350, Yarra (C),93380
-27450, Yarra Ranges (S),155312
-27630, Yarriambiack (S),6738
+20110, Alpine,12450
+20260, Ararat,11707
+20570, Ballarat,103407
+20660, Banyule,127693
+20740, Bass Coast,33317
+20830, Baw Baw,49008
+20910, Bayside,102737
+21010, Benalla,13962
+21110, Boroondara,177361
+21180, Brimbank,205741
+21270, Buloke,6230
+21370, Campaspe,37429
+21450, Cardinia,97625
+21610, Casey,313521
+21670, Central Goldfields,13012
+21750, Colac-Otway,21359
+21830, Corangamite,16133
+21890, Darebin,155022
+22110, East Gippsland,45426
+22170, Frankston,139511
+22250, Gannawarra,10563
+22830, Greater Shepparton,65076
+22910, Hepburn,15560
+22980, Hindmarsh,5741
+23110, Hobsons Bay,93392
+23190, Horsham,19817
+23270, Hume,207830
+23350, Indigo,16035
+23430, Kingston,159023
+23670, Knox,160665
+23810, Latrobe,74329
+23940, Loddon,7555
+24130, Macedon Ranges,47512
+24210, Manningham,122902
+24250, Mansfield,8605
+24330, Maribyrnong,87355
+24410, Maroondah,114979
+24600, Melbourne,148039
+24650, Melton,141749
+24780, Mildura,54564
+24850, Mitchell,41632
+24900, Moira,29306
+24970, Monash,192850
+25060, Moonee Valley,122968
+25150, Moorabool,32658
+25250, Moreland,172091
+25340, Mornington Peninsula,160862
+22670, Greater Dandenong,160952
+22750, Greater Geelong,238603
+25430, Mount Alexander,18966
+25490, Moyne,16693
+25620, Murrindindi,13993
+25710, Nillumbik,64280
+25810, Northern Grampians,11577
+22310, Glen Eira,149012
+22410, Glenelg,19726
+22490, Golden Plains,21929
+22620, Greater Bendigo,111783
+25900, Port Phillip,108558
+25990, Pyrenees,7301
+26080, Queenscliffe,2904
+26170, South Gippsland,28936
+26260, Southern Grampians,16066
+26350, Stonnington,111606
+26430, Strathbogie,10329
+26490, Surf Coast,30445
+26610, Swan Hill,20904
+26670, Towong,5973
+26700, Wangaratta,28559
+26730, Warrnambool,34245
+26810, Wellington,43465
+26890, West Wimmera,3912
+26980, Whitehorse,170093
+27070, Whittlesea,207881
+27170, Wodonga,39844
+27260, Wyndham,228088
+27350, Yarra,93380
+27450, Yarra Ranges,155312
+27630, Yarriambiack,6738
 29399, Unincorporated Vic,887
