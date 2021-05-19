@@ -1,0 +1,35 @@
+---
+- name: apt install pip3
+  become: yes
+  apt:
+    update_cache: yes
+    name: python3-pip
+
+- name: install pip dependency
+  become: yes
+  pip:
+    name: 
+      - tweepy
+      - pycouchdb
+      - couchdb
+
+- name: upload json dataset
+  become: yes
+  copy:
+    src: ../../../crawler/bitcoin_vic.json
+    dest: /home/ubuntu/COMP90024_Project2/crawler/
+
+- name: upload processing script 
+  become: yes
+  copy:
+    src: ../script/set_bitcoin_vic.py
+    dest: /home/ubuntu/prepocessing/
+    mode: 0777
+
+- name: setup bitcoin_vic_db and its MapReduce view
+  become: yes
+  ansible.builtin.shell: python3 /home/ubuntu/prepocessing/set_bitcoin_vic.py
+  register: out
+
+- debug: 
+    msg: '{{ out.stdout }}'
