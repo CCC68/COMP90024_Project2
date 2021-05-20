@@ -57,7 +57,6 @@ with open('aurin/vic.json',encoding='utf-8',) as f2:
         for feature in raw_data['features']:
             if (feature['properties']["vic_lga__3"]).lower() == city.lower():
                 feature['properties']['tweets_count'] = get_total_count(city, data1)
-                print(get_city_income(city))
                 feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
 
     #所有城市遍历完再写进去
