@@ -5,10 +5,10 @@ import urllib.request
 
 Base_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
 
-df = pd.read_csv(Base_dir+"/aurin/aurin_vic/income.csv", encoding='utf-8', header=0, index_col=0)
-
-city_list = [i.lower() for i in df.index.tolist()]
-
+# aurin city income list
+df = pd.read_csv("aurin/aurin_vic/income.csv", encoding='utf-8', header=0, index_col=0)
+# shift to lower case
+city_list = df.index.tolist()
 
 
 def get_record(url):
@@ -20,9 +20,7 @@ def get_city_income(city):
 
     median_aud_2013_14 = df.at[city, "median_aud_2013_14"]
     median_aud_2014_15 = df.at[city, "median_aud_2014_15"]
-
-    return int(median_aud_2013_14), int(median_aud_2014_15)
-
+    return (int(median_aud_2013_14), int(median_aud_2014_15))
 
 # with open(Base_dir+"/aurin/aurin_vic/income.csv") as f:
 #     line = f.readline()
@@ -35,7 +33,7 @@ def get_city_income(city):
 #         line = f.readline()
 
 
-def get_total_count(city ,map_json):
+def get_total_count(city, map_json):
 
     tweet_count = 0
     for each in map_json['rows']:
@@ -44,22 +42,22 @@ def get_total_count(city ,map_json):
     return tweet_count
 
 
-
-with open(Base_dir+"/aurin_vic/vic.json",encoding='utf-8',) as f2:
-    url = 'http://82.156.182.19:5984/bitcoindb/_design/bitcoint_location_count/_view/all?group=true'
+with open('aurin/vic.json',encoding='utf-8',) as f2:
+    url = 'http://172.26.132.118:5984/bitcoin_vic_db/_design/bitcoint_location_count/_view/all?group=true'
 
     #raw_data 是原始的geo.json
     raw_data = json.load(f2)
 
-    # data1 是mapreduce回来的key-value对
+    # data1 是mapreduce回来的key-value对(twitter result)
     data1 = get_record(url)
 
     #
     for city in city_list:
 
         for feature in raw_data['features']:
-            if feature['properties']["vic_lga__3"] == city:
+            if (feature['properties']["vic_lga__3"]).lower() == city.lower():
                 feature['properties']['tweets_count'] = get_total_count(city, data1)
+                print(get_city_income(city))
                 feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
 
     #所有城市遍历完再写进去
@@ -70,4 +68,3 @@ with open(Base_dir+"/aurin_vic/vic.json",encoding='utf-8',) as f2:
     r.close()
 
 f2.close()
-
