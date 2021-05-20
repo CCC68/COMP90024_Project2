@@ -6,7 +6,8 @@ import urllib.request
 Base_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
 
 df = pd.read_csv(Base_dir+"/aurin/aurin_vic/income.csv", encoding='utf-8', header=0, index_col=0)
-city_list = df.index.tolist()
+
+city_list = [i.lower() for i in df.index.tolist()]
 
 
 
@@ -16,8 +17,6 @@ def get_record(url):
     return ele_json
 
 def get_city_income(city):
-    if city not in city_list:
-        return 0, 0
 
     median_aud_2013_14 = df.at[city, "median_aud_2013_14"]
     median_aud_2014_15 = df.at[city, "median_aud_2014_15"]
@@ -36,19 +35,17 @@ def get_city_income(city):
 #         line = f.readline()
 
 
-#placeholder for map_json
-file=""
-
 def get_total_count(city ,map_json):
+
     tweet_count = 0
-    for each in map_json:
+    for each in map_json['rows']:
         if each['key'].find(city) != -1:
             tweet_count += each['value']
     return tweet_count
 
 
 
-with open("geo.json",encoding='utf-8',) as f2:
+with open(Base_dir+"/aurin_vic/vic.json",encoding='utf-8',) as f2:
     url = 'http://82.156.182.19:5984/bitcoindb/_design/bitcoint_location_count/_view/all?group=true'
 
     #raw_data 是原始的geo.json
@@ -61,12 +58,12 @@ with open("geo.json",encoding='utf-8',) as f2:
     for city in city_list:
 
         for feature in raw_data['features']:
-            if feature['properties']['name'] == city:
-                feature['properties']['tweets_count'] = get_total_count(city,data1)
+            if feature['properties']["vic_lga__3"] == city:
+                feature['properties']['tweets_count'] = get_total_count(city, data1)
                 feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
 
     #所有城市遍历完再写进去
-    with open('geo_1.json', 'w') as r:
+    with open('vic_plus.json', 'w') as r:
         print (raw_data)
         json.dump(raw_data, r)
 
