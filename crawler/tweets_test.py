@@ -16,12 +16,12 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 search_term = "exercise OR diet OR Yoga OR weightlose OR slim OR gym OR calorie OR muscle OR fatburn"
 # search_term = 'bitcoin'
-with open("exercise_vic.json","w") as f:
+with open("exercise_nsw.json","w") as f:
     # api.search
     count=0
     # NSW--"-32.238539,147.516999,500km"
     # VIC--"-36.874119,144.634508,500km"
-    for tweet in tweepy.Cursor(api.search, q=search_term, geocode = "-36.874119,144.634508,500km", result_type="recent", include_entities=False).items(1000000):
+    for tweet in tweepy.Cursor(api.search, q=search_term, geocode = "-32.238539,147.516999,500km", result_type="recent", include_entities=False).items(1000000):
         # print(tweet._json)
         f.write(json.dumps(tweet._json)+"\n")
         count+=1
