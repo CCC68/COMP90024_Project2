@@ -37,7 +37,7 @@ def get_total_count(city, map_json):
 
     tweet_count = 0
     for each in map_json['rows']:
-        if each['key'].find(city) != -1:
+        if each['key'].lower().find(city) != -1:
             tweet_count += each['value']
     return tweet_count
 
@@ -51,11 +51,10 @@ with open('aurin/vic.json',encoding='utf-8',) as f2:
     # data1 是mapreduce回来的key-value对(twitter result)
     data1 = get_record(url)
 
-    #
     for city in city_list:
 
         for feature in raw_data['features']:
-            if (feature['properties']["vic_lga__3"]).lower() == city.lower():
+            if (feature['properties']["vic_lga__3"]).lower() == city:
                 feature['properties']['tweets_count'] = get_total_count(city, data1)
                 feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
 
