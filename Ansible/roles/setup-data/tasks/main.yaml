@@ -15,21 +15,40 @@
 
 - name: upload json dataset
   become: yes
-  copy:
-    src: ../../../crawler/bitcoin_vic.json
+  copy: 
+    src: '{{ item }}'
     dest: /home/ubuntu/COMP90024_Project2/crawler/
+  loop:
+    - ../../../crawler/bitcoin_vic.json
+    - ../../../crawler/bitcoin_nsw.json
+    - ../../../crawler/exercise_vic.json
+    - ../../../crawler/exercise_nsw.json
+    - ../../../crawler/traffic_vic.json
+    - ../../../crawler/traffic_nsw.json
+    
 
 - name: upload processing script 
   become: yes
-  copy:
-    src: ../script/set_bitcoin_vic.py
+  copy: 
+    src: '{{ item }}'
     dest: /home/ubuntu/prepocessing/
     mode: 0777
+  loop:
+    - ../script/set_bitcoin_vic.py 
+    - ../script/set_bitcoin_nsw.py
+    - ../script/set_exercise_vic.py
+    - ../script/set_exercise_nsw.py
+    - ../script/set_traffic_vic.py
+    - ../script/set_traffic_nsw.py
 
-- name: setup bitcoin_vic_db and its MapReduce view
+
+- name: setup db and its MapReduce view
   become: yes
-  ansible.builtin.shell: python3 /home/ubuntu/prepocessing/set_bitcoin_vic.py
-  register: out
-
-- debug: 
-    msg: '{{ out.stdout }}'
+  ansible.builtin.shell: '{{ item }}'
+  loop: 
+    - 'python3 /home/ubuntu/prepocessing/set_bitcoin_vic.py'
+    - 'python3 /home/ubuntu/prepocessing/set_bitcoin_nsw.py'
+    - 'python3 /home/ubuntu/prepocessing/set_exercise_vic.py'
+    - 'python3 /home/ubuntu/prepocessing/set_exercise_nsw.py'
+    - 'python3 /home/ubuntu/prepocessing/set_traffic_vic.py'
+    - 'python3 /home/ubuntu/prepocessing/set_traffic_nsw.py'
