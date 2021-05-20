@@ -49,27 +49,28 @@ def get_total_count(city ,map_json):
 
 
 with open("geo.json",encoding='utf-8',) as f2:
-        url = ""
-        #raw_data 是原始的geo.json
-        raw_data = json.load(f2)
+    url = 'http://82.156.182.19:5984/bitcoindb/_design/bitcoint_location_count/_view/all?group=true'
 
-        # data1 是mapreduce回来的key-value对
-        get_record(url)
+    #raw_data 是原始的geo.json
+    raw_data = json.load(f2)
 
-        #
-        for city in city_list:
+    # data1 是mapreduce回来的key-value对
+    data1 = get_record(url)
 
-            for feature in raw_data['features']:
-                if feature['properties']['name'] == city:
-                    feature['properties']['tweets_count'] = get_total_count(city,data1)
-                    feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
+    #
+    for city in city_list:
 
-        #所有城市遍历完再写进去
-        with open('geo_1.json', 'w') as r:
-            print (raw_data)
-            json.dump(raw_data, r)
+        for feature in raw_data['features']:
+            if feature['properties']['name'] == city:
+                feature['properties']['tweets_count'] = get_total_count(city,data1)
+                feature['properties']['income_2013'], feature['properties']['income_2014'] = get_city_income(city)
 
-        r.close()
+    #所有城市遍历完再写进去
+    with open('geo_1.json', 'w') as r:
+        print (raw_data)
+        json.dump(raw_data, r)
+
+    r.close()
 
 f2.close()
 
