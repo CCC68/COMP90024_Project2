@@ -44,7 +44,7 @@ def get_total_count(city ,map_json):
     for each in map_json:
         if each['key'].find(city) != -1:
             tweet_count += each['value']
-            return tweet_count
+    return tweet_count
 
 
 
