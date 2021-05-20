@@ -16,8 +16,8 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 # search_term = "exercise OR diet OR Yoga OR weightlose OR slim OR gym OR calorie OR muscle OR fatburn"
 # search_term = 'bitcoin'
-search_term = 'traffic'
-with open("traffic_vic.json","w") as f:
+search_term = 'covid OR covid19 OR coronavirus OR covid-19 OR pandemic'
+with open("covid_vic.json","w") as f:
     # api.search
     count=0
     # NSW--"-32.238539,147.516999,500km"
