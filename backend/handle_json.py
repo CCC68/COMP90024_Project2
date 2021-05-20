@@ -5,9 +5,8 @@ import urllib.request
 
 Base_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
 
-df = pd.read_csv(Base_dir+"/aurin/aurin_vic/income.csv", encoding='utf-8', header=0, index_col=0)
-
-city_list = [i.lower() for i in df.index.tolist()]
+df = pd.read_csv(Base_dir+"/aurin/aurin_vic/income.csv", encoding='utf-8', header=0)
+city_list = df.index.tolist()
 
 
 
@@ -35,7 +34,7 @@ def get_city_income(city):
 #         line = f.readline()
 
 
-def get_total_count(city ,map_json):
+def get_total_count(city, map_json):
 
     tweet_count = 0
     for each in map_json['rows']:
@@ -54,7 +53,6 @@ with open(Base_dir+"/aurin_vic/vic.json",encoding='utf-8',) as f2:
     # data1 是mapreduce回来的key-value对
     data1 = get_record(url)
 
-    #
     for city in city_list:
 
         for feature in raw_data['features']:
