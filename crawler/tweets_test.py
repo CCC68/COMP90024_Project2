@@ -14,11 +14,12 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-search_term = "exercise OR diet OR Yoga OR weightlose OR slim OR gym OR calorie OR muscle OR fatburn"
-with open("tweet3.json","w") as f:
+# search_term = "exercise OR diet OR Yoga OR weightlose OR slim OR gym OR calorie OR muscle OR fatburn"
+search_term = 'bitcoin'
+with open("bitcoin_vic.json","w") as f:
     # api.search
     count=0
-    for tweet in tweepy.Cursor(api.search, q=search_term, geocode = "-37.999250,144.5800,40km", result_type="recent", include_entities=False).items(1000000):
+    for tweet in tweepy.Cursor(api.search, q=search_term, geocode = "-37.999250,144.5800,500km", result_type="recent", include_entities=False).items(1000000):
         # print(tweet._json)
         f.write(json.dumps(tweet._json)+"\n")
         count+=1
