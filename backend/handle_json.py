@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import urllib.request
 
-Base_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
+Base_dir = os.path.abspath(os.path.join(os.getcwd()))
 
 # resceive the backend request of state
 state = 'vic'
@@ -28,13 +28,13 @@ def get_city_income(city):
 
 def get_city_obesity(city):
 
-    median_aud_2014_15 = df_obesity.loc[df_obesity['lga_name'] == city, "ovrwgt_p_1_count"]
-    return int(median_aud_2014_15)
+    obesity_rate = df_obesity.loc[df_obesity['lga_name'] == city, "ovrwgt_p_1_count"]
+    return int(obesity_rate)
 
 def get_city_population(city):
 
-    median_aud_2014_15 = df_population.loc[df_population['lga_name'] == city, "erp_2016pr"]
-    return int(median_aud_2014_15)
+    population = df_population.loc[df_population['lga_name'] == city, "erp_2016pr"]
+    return int(population)
 
 def get_total_count(city, map_json):
 
@@ -46,19 +46,28 @@ def get_total_count(city, map_json):
 
 
 with open(Base_dir+f'/aurin/{state}.json',encoding='utf-8',) as f2:
-    url = f'http://172.26.132.118:5984/bitcoin_{state}_db/_design/bitcoint_location_count/_view/all?group=true'
+    url_bitcoin = f'http://172.26.132.118:5984/bitcoin_{state}_db/_design/bitcoin_location_count/_view/all?group=true'
+    url_exercise = f'http://172.26.132.118:5984/exercise_{state}_db/_design/exercise_location_count/_view/all?group=true'
+    url_traffic = f'http://172.26.132.118:5984/traffic_{state}/_design/traffic_location_count/_view/all?group=true'
 
     #raw_data 是原始的geo.json
     raw_data = json.load(f2)
 
     # data1 是mapreduce回来的key-value对(twitter result)
-    data1 = get_record(url)
+    bit_data = get_record(url_bitcoin)
+    exe_data = get_record(url_exercise)
+    traff_data = get_record(url_traffic)
+
+
+
 
     for city in city_list:
 
         for feature in raw_data['features']:
             if (feature['properties']["vic_lga__3"]).lower() == city:
-                feature['properties']['tweets_count'] = get_total_count(city, data1)
+                feature['properties']['bitcoin_tweets_count'] = get_total_count(city, bit_data)
+                feature['properties']['exercise_tweets_count'] = get_total_count(city, exe_data)
+                feature['properties']['traffic_tweets_count'] = get_total_count(city, traff_data)
                 feature['properties']['income_2014'] = get_city_income(city)
                 feature['properties']['obesity_rate'] = get_city_obesity(city)
                 feature['properties']['population'] = get_city_population(city)
