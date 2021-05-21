@@ -19,7 +19,7 @@ lga_code16,lga_name,erp_2016pr
 13910,hilltops,18841
 14000,hornsby,147661
 14100,hunters hill,14638
-14170,inner west,192030
+14170,innerwest,192030
 14200,inverell,16778
 14300,junee,6462
 14350,kempsey,29454
@@ -79,53 +79,53 @@ lga_code16,lga_name,erp_2016pr
 12850,fairfield,206436
 12870,federation,12411
 12900,forbes,9808
-12930, Georges River,153452
-12950, Gilgandra,4309
-13010, Glen Innes Severn,8942
-13310, Goulburn Mulwaree,30150
-13340, Greater Hume Shire,10509
-13450, Griffith,26422
-13510, Gundagai,11286
-13550, Gunnedah,12551
-13660, Gwydir,5326
-13800, Hawkesbury,66136
-13850, Hay,2975
-16380, Port Macquarie-Hastings,79905
-16400, Port Stephens,71118
-16490, Queanbeyan-Palerang Regional,58128
-16550, Randwick,149276
-16610, Richmond Valley,23164
-16650, Rockdale,115822
-16700, Ryde,121807
-16900, Shellharbour,70511
-16950, Shoalhaven,101777
-17000, Singleton,23595
-17040, Snowy Monaro Regional,20617
-17080, Snowy Valleys,14644
-17420, The Hills Shire,162539
-17550, Tweed,93458
-17620, Upper Hunter Shire,14409
-17640, Upper Lachlan Shire,7841
-17650, Uralla,6159
-17750, Wagga Wagga,64085
-17850, Walcha,3144
-17900, Walgett,6369
-17950, Warren,2802
-18020, Warrumbungle Shire,9541
-18050, Waverley,72106
-18100, Weddin,3692
-18200, Wentworth,6920
-18230, Western Plains Regional,51429
-18250, Willoughby,78017
-18350, Wingecarribee,49070
-18400, Wollondilly,49742
-18450, Wollongong,211201
-18500, Woollahra,58290
-18710, Yass Valley,16628
-19399, Unincorporated NSW,1108
-17350, Temora,6236
-17400, Tenterfield,6667
-17100, Strathfield,42331
-17150, Sutherland Shire,226041
-17200, Sydney,224211
-17310, Tamworth Regional,60998
+12930,georges river,153452
+12950,gilgandra,4309
+13010,glen Innes severn,8942
+13310,goulburn mulwaree,30150
+13340,greater hume shire,10509
+13450,griffith,26422
+13510,gundagai,11286
+13550,gunnedah,12551
+13660,gwydir,5326
+13800,hawkesbury,66136
+13850,hay,2975
+16380,port macquarie-Hastings,79905
+16400,port stephens,71118
+16490,queanbeyan-palerang regional,58128
+16550,randwick,149276
+16610,richmond valley,23164
+16650,rockdale,115822
+16700,ryde,121807
+16900,shellharbour,70511
+16950,shoalhaven,101777
+17000,singleton,23595
+17040,snowy monaroregional,20617
+17080,snowy valleys,14644
+17420,the hills shire,162539
+17550,tweed,93458
+17620,upper hunter shire,14409
+17640,upper Lachlan shire,7841
+17650,uralla,6159
+17750,wagga wagga,64085
+17850,walcha,3144
+17900,walgett,6369
+17950,warren,2802
+18020,warrumbungle shire,9541
+18050,waverley,72106
+18100,weddin,3692
+18200,wentworth,6920
+18230,western plains regional,51429
+18250,willoughby,78017
+18350,wingecarribee,49070
+18400,wollondilly,49742
+18450,wollongong,211201
+18500,woollahra,58290
+18710,yass valley,16628
+19399,unincorporated nsw,1108
+17350,temora,6236
+17400,tenterfield,6667
+17100,strathfield,42331
+17150,sutherland shire,226041
+17200,sydney,224211
+17310,tamworth regional,60998
