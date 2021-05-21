@@ -3,10 +3,11 @@ import os
 import pandas as pd
 import urllib.request
 
-Base_dir = os.path.abspath(os.path.join(os.getcwd()))
+Base_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
 
 # resceive the backend request of state
 state = 'vic'
+
 # aurin city income list
 df_income = pd.read_csv(Base_dir+f"/aurin/aurin_{state}/income.csv", encoding='utf-8')
 df_obesity = pd.read_csv(Base_dir+f"/aurin/aurin_{state}/obesity.csv", encoding='utf-8')
@@ -48,7 +49,7 @@ def get_total_count(city, map_json):
 with open(Base_dir+f'/aurin/{state}.json',encoding='utf-8',) as f2:
     url_bitcoin = f'http://172.26.132.118:5984/bitcoin_{state}_db/_design/bitcoin_location_count/_view/all?group=true'
     url_exercise = f'http://172.26.132.118:5984/exercise_{state}_db/_design/exercise_location_count/_view/all?group=true'
-    url_traffic = f'http://172.26.132.118:5984/traffic_{state}/_design/traffic_location_count/_view/all?group=true'
+    url_traffic = f'http://172.26.132.118:5984/traffic_{state}_db/_design/traffic_location_count/_view/all?group=true'
 
     #raw_data 是原始的geo.json
     raw_data = json.load(f2)
@@ -64,7 +65,7 @@ with open(Base_dir+f'/aurin/{state}.json',encoding='utf-8',) as f2:
     for city in city_list:
 
         for feature in raw_data['features']:
-            if (feature['properties']["vic_lga__3"]).lower() == city:
+            if (feature['properties'][f"{state}_lga__3"]).lower() == city:
                 feature['properties']['bitcoin_tweets_count'] = get_total_count(city, bit_data)
                 feature['properties']['exercise_tweets_count'] = get_total_count(city, exe_data)
                 feature['properties']['traffic_tweets_count'] = get_total_count(city, traff_data)
