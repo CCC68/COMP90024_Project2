@@ -1,36 +1,34 @@
 <template>
   <div class="datamap view">
-    <div class="menu">
-      <ul @click="switchCity">
-        <li v-for="city in cites" :key="city">
-          <button class="btn">{{ city }}</button>
-        </li>
-      </ul>
-      <div id="main" style="height: 200px; width: 200px"></div>
-    </div>
-
     <div id="map"></div>
     <div class="footer">
+      <div class="container">
+        <div class="filters">
+          <div class="input-group">
+            <label class="input-group-text" for="sel_pla">Place</label>
+            <select class="form-select" id="sel_pla" @change="switchPlace($event)">
+              <option v-for="place in places" :key="place" :value="place.n">
+                {{ place.name }}
+              </option>
+            </select>
+          </div>
 
-      <div class="input-group">
-        <label class="input-group-text" for="sel_pla">Place</label>
-        <select class="form-select" id="sel_pla" @change="switchPlace($event.target.value)">
-          <option v-for="place in places" :key="place" :value="place.n">{{ place.name }}</option>
-        </select>
-      </div>
+          <div class="input-group">
+            <label class="input-group-text" for="sel_sce">Twitter Data</label>
+            <select class="form-select" id="sel_sce" @change="switchScenario()">
+              <option v-for="scenario in scenarios" :key="scenario">
+                {{ scenario }}
+              </option>
+            </select>
+          </div>
 
-      <div class="input-group">
-        <label class="input-group-text" for="sel_sce">Twitter Data</label>
-        <select class="form-select" id="sel_sce">
-          <option v-for="scenario in scenarios" :key="scenario">{{ scenario }}</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label class="input-group-text" for="sel_aur">Aurin Data</label>
-        <select class="form-select" id="sel_aur">
-          <option v-for="aurin in aurins" :key="aurin">{{ aurin }}</option>
-        </select>
+          <div class="input-group">
+            <label class="input-group-text" for="sel_aur">Aurin Data</label>
+            <select class="form-select" id="sel_aur" @change="switchAurin()">
+              <option v-for="aurin in aurins" :key="aurin">{{ aurin }}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,12 +40,9 @@ import { Loader } from "@googlemaps/js-api-loader";
 export default {
   setup() {},
   data() {
-    return {
-      cites: ["Melbourne", "Sydney", "Brisbane", "Finland"],
-    };
+    return {};
   },
   beforeMount() {
-
     this.initData();
 
     const loader = new Loader({
@@ -59,10 +54,10 @@ export default {
       let map = new window.google.maps.Map(document.getElementById("map"), {
         // Map Options like 'center' & 'zoom'
       });
-      
+
       this.map = window.map = map;
 
-      this.switchPlace('vic');
+      this.switchPlace("vic");
 
       this.infowindow = new window.google.maps.InfoWindow();
 
@@ -70,7 +65,6 @@ export default {
         console.log(event.feature.i);
         this.createInfoWindow(map, event);
       });
-
     });
   },
   methods: {
@@ -87,10 +81,9 @@ export default {
         map.data.remove(feature);
       });
     },
-    switchPlace(n) {
-
+    switchPlace(event) {
       this.clearMap();
-
+      let n = event.target?.value || event;
       let { coords, zoom, filename } = this.places[n];
       let map = this.map;
       let url = process.env.VUE_APP_BACKEND_BASE_URL + filename;
@@ -99,73 +92,97 @@ export default {
       map.setZoom(zoom);
       map.setCenter(coords);
       map.data.loadGeoJson(url);
+      // map.data.forEach(function (feature) {
+      //   // map.data.remove(feature);
 
+      // });
+    },
+    switchScenario() {
+      console.log("switch scenario");
+    },
+    switchAurin() {
+      console.log("switch aurin");
     },
     createInfoWindow(map, event) {
+      let name = event.feature.getProperty("vic_lga__3");
 
-        let name = event.feature.getProperty("vic_lga__3");
-        let bit_count = event.feature.getProperty("tweets_count");
-        let income_2013 = event.feature.getProperty("income_2013");
-        let income_2014 = event.feature.getProperty("income_2014");
+      let bitcoin_tweets_count = event.feature.getProperty(
+        "bitcoin_tweets_count"
+      );
+      let traffic_tweets_count = event.feature.getProperty(
+        "traffic_tweets_count"
+      );
+      let exercise_tweets_count = event.feature.getProperty(
+        "exercise_tweets_count"
+      );
 
-        // Create content for info window
-        // var contentString =
-        //   '<div id="content"><div id="siteNotice"></div>' +
-        //   '<h2 id="firstHeading" class="firstHeading">' +
-        //   name +
-        //   "</h2>" +
-        //   "<h3>Zip code: " +
-        //   zip +
-        //   "</h3>" +
-        //   '<div id="bodyContent" style="font-size: 12pt;" >' +
-        //   "</br>Population (2018): " +
-        //   population +
-        //   "</br>Median income (2015): " +
-        //   income.toFixed(2) +
-        //   " €" +
-        //   "</br>Median income relative to national average (2015): " +
-        //   incomeRelative.toFixed(2) +
-        //   " €" +
-        //   "</br>Population density (persons / km<sup>2</sup>): " +
-        //   populationDensity.toFixed(2) +
-        //   "</p>" +
-        //   "</div>" +
-        //   "</div>";
-        let contentString = `<div id="content">
+      let income = event.feature.getProperty("income_2014");
+      let obesity = event.feature.getProperty("obesity_rate");
+      let population = event.feature.getProperty("population");
+
+      // Create content for info window
+      // var contentString =
+      //   '<div id="content"><div id="siteNotice"></div>' +
+      //   '<h2 id="firstHeading" class="firstHeading">' +
+      //   name +
+      //   "</h2>" +
+      //   "<h3>Zip code: " +
+      //   zip +
+      //   "</h3>" +
+      //   '<div id="bodyContent" style="font-size: 12pt;" >' +
+      //   "</br>Population (2018): " +
+      //   population +
+      //   "</br>Median income (2015): " +
+      //   income.toFixed(2) +
+      //   " €" +
+      //   "</br>Median income relative to national average (2015): " +
+      //   incomeRelative.toFixed(2) +
+      //   " €" +
+      //   "</br>Population density (persons / km<sup>2</sup>): " +
+      //   populationDensity.toFixed(2) +
+      //   "</p>" +
+      //   "</div>" +
+      //   "</div>";
+      let contentString = `<div id="content">
             <div id="siteNotice"></div>
             <h5 id="firstHeading" class="firstHeading">${name}</h5>
-            <ul>
-              <li>Tweet Counts: ${bit_count}</li>
-              <li>Income of 2013: ${income_2013}</li>
-              <li>Income of 2013: ${income_2014}</li>
-            </ul>
+            <div id="bodyContent">
+              <ul>
+                <li>Bitcoin Tweet Counts: ${bitcoin_tweets_count}</li>
+                <li>Traffic Tweet Counts: ${traffic_tweets_count}</li>
+                <li>Exercise Tweet Counts: ${exercise_tweets_count}</li>
+                <li>Income of 2014: ${income}</li>
+                <li>Obesity: ${obesity}</li>
+                <li>Population: ${population}</li>
+              </ul>
+            </div>
            </div>`;
 
-        // Center info window on selected zip code area
-        // Find center of zip code area by converting
-        // the corresponding Polygon object to a
-        // LatLngBounds object which has the getCenter function
-        var bounds = new window.google.maps.LatLngBounds();
-        var geometry = event.feature.getGeometry();
+      // Center info window on selected zip code area
+      // Find center of zip code area by converting
+      // the corresponding Polygon object to a
+      // LatLngBounds object which has the getCenter function
+      var bounds = new window.google.maps.LatLngBounds();
+      var geometry = event.feature.getGeometry();
 
-        geometry.forEachLatLng(function (point) {
-          bounds.extend({
-            lat: point.lat(),
-            lng: point.lng(),
-          });
+      geometry.forEachLatLng(function (point) {
+        bounds.extend({
+          lat: point.lat(),
+          lng: point.lng(),
         });
-        var center = bounds.getCenter();
+      });
+      var center = bounds.getCenter();
 
-        // Create invisible marker for info window
-        var marker = new window.google.maps.Marker({
-          position: center,
-          map: map,
-          visible: false,
-        });
-        // Create info window
-        this.infowindow.setContent(contentString);
-        this.infowindow.open(map, marker);
-      }
+      // Create invisible marker for info window
+      var marker = new window.google.maps.Marker({
+        position: center,
+        map: map,
+        visible: false,
+      });
+      // Create info window
+      this.infowindow.setContent(contentString);
+      this.infowindow.open(map, marker);
+    },
   },
 };
 </script>
@@ -178,21 +195,30 @@ export default {
   right: 0;
   bottom: 0;
 }
+
 #map {
   width: 100%;
   height: 100%;
 }
-.menu {
-  position: absolute;
-  left: 0;
-  top: 72px;
-  z-index: 100;
-  background: #fff;
-}
+
 .footer {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  background: #fff;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters > .input-group {
+  width: 30%;
 }
 </style>

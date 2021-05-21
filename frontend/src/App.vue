@@ -40,9 +40,6 @@ export default {
   z-index: 1000;
   backdrop-filter: blur(5px);
 }
-.views {
-  display: flex;
-}
 .view {
   position: absolute;
   top: 0;
