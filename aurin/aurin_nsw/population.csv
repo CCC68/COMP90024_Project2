@@ -19,7 +19,7 @@ lga_code16,lga_name,erp_2016pr
 13910,hilltops,18841
 14000,hornsby,147661
 14100,hunters hill,14638
-14170,innerwest,192030
+14170,inner west,192030
 14200,inverell,16778
 14300,junee,6462
 14350,kempsey,29454
@@ -90,7 +90,7 @@ lga_code16,lga_name,erp_2016pr
 13660,gwydir,5326
 13800,hawkesbury,66136
 13850,hay,2975
-16380,port macquarie-Hastings,79905
+16380,port macquarie-hastings,79905
 16400,port stephens,71118
 16490,queanbeyan-palerang regional,58128
 16550,randwick,149276
@@ -100,12 +100,12 @@ lga_code16,lga_name,erp_2016pr
 16900,shellharbour,70511
 16950,shoalhaven,101777
 17000,singleton,23595
-17040,snowy monaroregional,20617
+17040,snowy monaro regional,20617
 17080,snowy valleys,14644
 17420,the hills shire,162539
 17550,tweed,93458
 17620,upper hunter shire,14409
-17640,upper Lachlan shire,7841
+17640,upper lachlan shire,7841
 17650,uralla,6159
 17750,wagga wagga,64085
 17850,walcha,3144

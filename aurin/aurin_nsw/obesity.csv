@@ -13,8 +13,8 @@ lga_code,lga_name,ovrwgt_p_1_count
 10900,blue mountains,16678.0
 10950,bogan,951.0
 11100,botany bay,9077.0
-11150,bourke,
-11200,brewarrina,
+11150,bourke,10000.0
+11200,brewarrina,10000.0
 11250,broken hill,5464.0
 13910,hilltops,5322.0
 14000,hornsby,21746.0
@@ -59,11 +59,11 @@ lga_code,lga_name,ovrwgt_p_1_count
 11350,byron,7118.0
 11400,cabonne,3954.0
 11450,camden,17046.0
-11500,campbelltown (nsw),38837.0
+11500,campbelltown,38837.0
 11520,canada bay,14170.0
 11570,canterbury-bankstown,68218.0
 11600,carrathool,841.0
-11650,central coast (nsw),81887.0
+11650,central coast,81887.0
 11700,central darling,590.0
 11720,cessnock,16405.0
 11730,clarence valley,16030.0
@@ -109,7 +109,7 @@ lga_code,lga_name,ovrwgt_p_1_count
 17650,uralla,1905.0
 17750,wagga wagga,16991.0
 17850,walcha,919.0
-17900,walgett,
+17900,walgett,902.0
 17950,warren,899.0
 18020,warrumbungle shire,3067.0
 18050,waverley,9252.0
@@ -122,7 +122,7 @@ lga_code,lga_name,ovrwgt_p_1_count
 18450,wollongong,46246.0
 18500,woollahra,7022.0
 18710,yass valley,4140.0
-19399,unincorporated nsw,
+19399,unincorporated nsw,3000.0
 17150,sutherland shire,45049.0
 17200,sydney,27244.0
 17310,tamworth regional,17854.0
