@@ -1,81 +1,81 @@
- lga_code16, lga_name16,erp_2016pr
-20110, Alpine,12450
-20260, Ararat,11707
-20570, Ballarat,103407
-20660, Banyule,127693
-20740, Bass Coast,33317
-20830, Baw Baw,49008
-20910, Bayside,102737
-21010, Benalla,13962
-21110, Boroondara,177361
-21180, Brimbank,205741
-21270, Buloke,6230
-21370, Campaspe,37429
-21450, Cardinia,97625
-21610, Casey,313521
-21670, Central Goldfields,13012
-21750, Colac-Otway,21359
-21830, Corangamite,16133
-21890, Darebin,155022
-22110, East Gippsland,45426
-22170, Frankston,139511
-22250, Gannawarra,10563
-22830, Greater Shepparton,65076
-22910, Hepburn,15560
-22980, Hindmarsh,5741
-23110, Hobsons Bay,93392
-23190, Horsham,19817
-23270, Hume,207830
-23350, Indigo,16035
-23430, Kingston,159023
-23670, Knox,160665
-23810, Latrobe,74329
-23940, Loddon,7555
-24130, Macedon Ranges,47512
-24210, Manningham,122902
-24250, Mansfield,8605
-24330, Maribyrnong,87355
-24410, Maroondah,114979
-24600, Melbourne,148039
-24650, Melton,141749
-24780, Mildura,54564
-24850, Mitchell,41632
-24900, Moira,29306
-24970, Monash,192850
-25060, Moonee Valley,122968
-25150, Moorabool,32658
-25250, Moreland,172091
-25340, Mornington Peninsula,160862
-22670, Greater Dandenong,160952
-22750, Greater Geelong,238603
-25430, Mount Alexander,18966
-25490, Moyne,16693
-25620, Murrindindi,13993
-25710, Nillumbik,64280
-25810, Northern Grampians,11577
-22310, Glen Eira,149012
-22410, Glenelg,19726
-22490, Golden Plains,21929
-22620, Greater Bendigo,111783
-25900, Port Phillip,108558
-25990, Pyrenees,7301
-26080, Queenscliffe,2904
-26170, South Gippsland,28936
-26260, Southern Grampians,16066
-26350, Stonnington,111606
-26430, Strathbogie,10329
-26490, Surf Coast,30445
-26610, Swan Hill,20904
-26670, Towong,5973
-26700, Wangaratta,28559
-26730, Warrnambool,34245
-26810, Wellington,43465
-26890, West Wimmera,3912
-26980, Whitehorse,170093
-27070, Whittlesea,207881
-27170, Wodonga,39844
-27260, Wyndham,228088
-27350, Yarra,93380
-27450, Yarra Ranges,155312
-27630, Yarriambiack,6738
-29399, Unincorporated Vic,887
+ lga_code16,lga_name,erp_2016pr
+20110,alpine,12450
+20260,ararat,11707
+20570,ballarat,103407
+20660,banyule,127693
+20740,bass coast,33317
+20830,baw baw,49008
+20910,bayside,102737
+21010,benalla,13962
+21110,boroondara,177361
+21180,brimbank,205741
+21270,buloke,6230
+21370,campaspe,37429
+21450,cardinia,97625
+21610,casey,313521
+21670,central goldfields,13012
+21750,colac-otway,21359
+21830,corangamite,16133
+21890,darebin,155022
+22110,east gippsland,45426
+22170,frankston,139511
+22250,gannawarra,10563
+22830,greater shepparton,65076
+22910,hepburn,15560
+22980,hindmarsh,5741
+23110,hobsons bay,93392
+23190,horsham,19817
+23270,hume,207830
+23350,indigo,16035
+23430,kingston,159023
+23670,knox,160665
+23810,latrobe,74329
+23940,loddon,7555
+24130,macedon ranges,47512
+24210,manningham,122902
+24250,mansfield,8605
+24330,maribyrnong,87355
+24410,maroondah,114979
+24600,melbourne,148039
+24650,melton,141749
+24780,mildura,54564
+24850,mitchell,41632
+24900,moira,29306
+24970,monash,192850
+25060,moonee valley,122968
+25150,moorabool,32658
+25250,moreland,172091
+25340,mornington peninsula,160862
+22670,greater dandenong,160952
+22750,greater geelong,238603
+25430,mount alexander,18966
+25490,moyne,16693
+25620,murrindindi,13993
+25710,nillumbik,64280
+25810,northern grampians,11577
+22310,glen eira,149012
+22410,glenelg,19726
+22490,golden plains,21929
+22620,greater bendigo,111783
+25900,port phillip,108558
+25990,pyrenees,7301
+26080,queenscliffe,2904
+26170,south gippsland,28936
+26260,southern grampians,16066
+26350,stonnington,111606
+26430,strathbogie,10329
+26490,surf coast,30445
+26610,swan hill,20904
+26670,towong,5973
+26700,wangaratta,28559
+26730,warrnambool,34245
+26810,wellington,43465
+26890,west wimmera,3912
+26980,whitehorse,170093
+27070,whittlesea,207881
+27170,wodonga,39844
+27260,wyndham,228088
+27350,yarra,93380
+27450,yarra ranges,155312
+27630,yarriambiack,6738
+29399,unincorporated vic,887
