@@ -4,9 +4,12 @@ import pandas as pd
 
 
 
-df = pd.read_csv("aurin/aurin_nsw/income.csv", encoding='utf-8',header=0)
+# df = pd.read_csv("aurin/aurin_nsw/income.csv", encoding='utf-8',header=0)
 df1 = pd.read_csv("aurin/aurin_nsw/population.csv", encoding='utf-8',header=0)
-df2 = pd.read_csv("aurin/aurin_nsw/obesity.csv", encoding='utf-8',header=0)
+# df2 = pd.read_csv("aurin/aurin_nsw/obesity.csv", encoding='utf-8',header=0)
+
+print(df1)
+
 
 
 # df=df.sort_values(by="lga_code_2016",ascending=True)
@@ -23,9 +26,9 @@ df2 = pd.read_csv("aurin/aurin_nsw/obesity.csv", encoding='utf-8',header=0)
 #
 # print(df2)
 
-for i in range(130):
-    df2.at[i, 'lga_name'] = df2.at[i, 'lga_name'].lower()
+# for i in range(130):
+#     df2.at[i, 'lga_name'] = df2.at[i, 'lga_name'].lower()
 #
 # df.to_csv("aurin/aurin_nsw/income.csv", encoding='utf-8',index=False)
 # df1.to_csv("aurin/aurin_nsw/population.csv", encoding='utf-8',index=False)
-df2.to_csv("aurin/aurin_nsw/obesity.csv", encoding='utf-8',index=False)
+# df2.to_csv("aurin/aurin_nsw/obesity.csv", encoding='utf-8',index=False)
