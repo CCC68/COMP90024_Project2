@@ -6,7 +6,11 @@
         <div class="filters">
           <div class="input-group">
             <label class="input-group-text" for="sel_pla">Place</label>
-            <select class="form-select" id="sel_pla" @change="switchPlace($event)">
+            <select
+              class="form-select"
+              id="sel_pla"
+              @change="switchPlace($event)"
+            >
               <option v-for="place in places" :key="place" :value="place.n">
                 {{ place.name }}
               </option>
@@ -15,7 +19,11 @@
 
           <div class="input-group">
             <label class="input-group-text" for="sel_sce">Twitter Data</label>
-            <select class="form-select" id="sel_sce" @change="switchScenario()">
+            <select
+              class="form-select"
+              id="sel_sce"
+              @change="switchScenario($event)"
+            >
               <option v-for="scenario in scenarios" :key="scenario">
                 {{ scenario }}
               </option>
@@ -24,7 +32,11 @@
 
           <div class="input-group">
             <label class="input-group-text" for="sel_aur">Aurin Data</label>
-            <select class="form-select" id="sel_aur" @change="switchAurin()">
+            <select
+              class="form-select"
+              id="sel_aur"
+              @change="switchAurin($event)"
+            >
               <option v-for="aurin in aurins" :key="aurin">{{ aurin }}</option>
             </select>
           </div>
@@ -36,11 +48,15 @@
 
 <script>
 import { Loader } from "@googlemaps/js-api-loader";
-// import * as echarts from "echarts";
+import * as echarts from "echarts";
 export default {
   setup() {},
   data() {
-    return {};
+    return {
+      currentPlace: null,
+      currentScenario: null,
+      currentAurin: null,
+    };
   },
   beforeMount() {
     this.initData();
@@ -67,6 +83,10 @@ export default {
       });
     });
   },
+  mounted() {
+    this.currentScenario = document.getElementById("sel_sce").value;
+    this.currentAurin = document.getElementById("sel_aur").value;
+  },
   methods: {
     initData() {
       this.places = this.$store.state.places;
@@ -87,6 +107,7 @@ export default {
       let { coords, zoom, filename } = this.places[n];
       let map = this.map;
       let url = process.env.VUE_APP_BACKEND_BASE_URL + filename;
+      this.currentPlace = this.places[n];
 
       console.log(coords);
       map.setZoom(zoom);
@@ -97,14 +118,20 @@ export default {
 
       // });
     },
-    switchScenario() {
-      console.log("switch scenario");
+    switchScenario(e) {
+      this.currentScenario = e.target.value;
+      this.infowindow.close();
+      console.log("switch scenario", e);
     },
-    switchAurin() {
-      console.log("switch aurin");
+    switchAurin(e) {
+      this.currentAurin = e.target.value;
+      this.infowindow.close();
+      console.log("switch aurin", e);
     },
     createInfoWindow(map, event) {
-      let name = event.feature.getProperty("vic_lga__3");
+      console.log(this.currentScenario);
+      console.log(this.currentAurin);
+      let name = event.feature.getProperty(this.currentPlace.placeField);
 
       let bitcoin_tweets_count = event.feature.getProperty(
         "bitcoin_tweets_count"
@@ -143,8 +170,10 @@ export default {
       //   "</p>" +
       //   "</div>" +
       //   "</div>";
+
+      let obesityPieChart = `<div id="obesityPieChart" style="height:240px;width:300px;"></div>`;
       let contentString = `<div id="content">
-            <div id="siteNotice"></div>
+            <div id="siteNotice">${this.currentPlace.name}</div>
             <h5 id="firstHeading" class="firstHeading">${name}</h5>
             <div id="bodyContent">
               <ul>
@@ -155,6 +184,7 @@ export default {
                 <li>Obesity: ${obesity}</li>
                 <li>Population: ${population}</li>
               </ul>
+              ${obesity && this.currentAurin === 'Obesity' ? obesityPieChart : ''}
             </div>
            </div>`;
 
@@ -182,6 +212,60 @@ export default {
       // Create info window
       this.infowindow.setContent(contentString);
       this.infowindow.open(map, marker);
+
+      // import * as echarts from 'echarts';
+
+      if (obesity && this.currentAurin === "Obesity") {
+        setTimeout(() => {
+          var chartDom = document.getElementById("obesityPieChart");
+          var myChart = echarts.init(chartDom);
+          var option;
+
+          option = {
+            tooltip: {
+              trigger: "item",
+            },
+            legend: {
+              top: "0%",
+              left: "center",
+            },
+            series: [
+              {
+                name: "Obesity Rate",
+                type: "pie",
+                radius: ["40%", "70%"],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                  borderRadius: 10,
+                  borderColor: "#fff",
+                  borderWidth: 2,
+                },
+                label: {
+                  show: true,
+                  // position: 'center',
+                  formatter: "{d}%",
+                },
+                emphasis: {
+                  // label: {
+                  //   show: true,
+                  //   fontSize: "40",
+                  //   fontWeight: "bold",
+                  // },
+                },
+                labelLine: {
+                  show: true,
+                },
+                data: [
+                  { value: obesity, name: "Obesity" },
+                  { value: population - obesity, name: "Other" },
+                ],
+              },
+            ],
+          };
+
+          option && myChart.setOption(option);
+        }, 0);
+      }
     },
   },
 };
