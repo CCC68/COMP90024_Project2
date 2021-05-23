@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header id="nav" class="p-3 bg-dark text-white d-flex">
+    <header id="nav" class="p-3 text-white d-flex">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center">
           <span class="me-md-auto">Project Logo</span>
@@ -39,6 +39,7 @@ export default {
   position: relative;
   z-index: 1000;
   backdrop-filter: blur(5px);
+  background: #21252980;
 }
 .view {
   position: absolute;

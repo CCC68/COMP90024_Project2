@@ -56,6 +56,8 @@ export default {
       currentPlace: null,
       currentScenario: null,
       currentAurin: null,
+      max: -Infinity,
+      min: Infinity,
     };
   },
   beforeMount() {
@@ -67,19 +69,31 @@ export default {
     });
 
     loader.load().then(() => {
-      let map = new window.google.maps.Map(document.getElementById("map"), {
+      let google = window.google;
+      let map = new google.maps.Map(document.getElementById("map"), {
         // Map Options like 'center' & 'zoom'
+        styles: this.$store.state.silver_map,
+        streetViewControl: false,
       });
 
       this.map = window.map = map;
 
       this.switchPlace("vic");
+      this.setColor();
 
       this.infowindow = new window.google.maps.InfoWindow();
 
       map.data.addListener("click", (event) => {
-        console.log(event.feature.i);
+        console.log(event.feature);
         this.createInfoWindow(map, event);
+      });
+
+      map.data.addListener("mouseover", (event) => {
+        map.data.revertStyle();
+        map.data.overrideStyle(event.feature, { strokeColor: 'grey', strokeWeight: 4 });
+      });
+      map.data.addListener("mouseout", () => {
+        map.data.revertStyle();
       });
     });
   },
@@ -113,20 +127,15 @@ export default {
       map.setZoom(zoom);
       map.setCenter(coords);
       map.data.loadGeoJson(url);
-      // map.data.forEach(function (feature) {
-      //   // map.data.remove(feature);
-
-      // });
     },
     switchScenario(e) {
       this.currentScenario = e.target.value;
       this.infowindow.close();
-      console.log("switch scenario", e);
     },
     switchAurin(e) {
       this.currentAurin = e.target.value;
       this.infowindow.close();
-      console.log("switch aurin", e);
+      this.setColor();
     },
     createInfoWindow(map, event) {
       console.log(this.currentScenario);
@@ -143,7 +152,7 @@ export default {
         "exercise_tweets_count"
       );
 
-      let income = event.feature.getProperty("income_2014");
+      let income_2014 = event.feature.getProperty("income_2014");
       let obesity = event.feature.getProperty("obesity_rate");
       let population = event.feature.getProperty("population");
 
@@ -172,19 +181,24 @@ export default {
       //   "</div>";
 
       let obesityPieChart = `<div id="obesityPieChart" style="height:240px;width:300px;"></div>`;
+      let bitcoin = `<div>Tweets related to Bitcoin: ${bitcoin_tweets_count}</div>`;
+      let traffic = `<div>Tweets related to traffic: ${traffic_tweets_count}</div>`;
+      let exrecise = `<div>Tweets related to exercise: ${exercise_tweets_count}</div>`;
+      let income = `<div>Income: ${income_2014}</div>`;
       let contentString = `<div id="content">
             <div id="siteNotice">${this.currentPlace.name}</div>
             <h5 id="firstHeading" class="firstHeading">${name}</h5>
             <div id="bodyContent">
-              <ul>
-                <li>Bitcoin Tweet Counts: ${bitcoin_tweets_count}</li>
-                <li>Traffic Tweet Counts: ${traffic_tweets_count}</li>
-                <li>Exercise Tweet Counts: ${exercise_tweets_count}</li>
-                <li>Income of 2014: ${income}</li>
-                <li>Obesity: ${obesity}</li>
-                <li>Population: ${population}</li>
-              </ul>
-              ${obesity && this.currentAurin === 'Obesity' ? obesityPieChart : ''}
+              ${this.currentScenario === "Bitcoin" ? bitcoin : ""}
+              ${this.currentScenario === "Traffic" ? traffic : ""}
+              ${this.currentScenario === "Exercise" ? exrecise : ""}
+              Population: ${population}
+              ${this.currentAurin === "Income" ? income : ""}
+              ${
+                obesity && this.currentAurin === "Obesity"
+                  ? obesityPieChart
+                  : ""
+              }
             </div>
            </div>`;
 
@@ -267,6 +281,61 @@ export default {
         }, 0);
       }
     },
+    getIncomeFill(income) {
+      let colors = this.$store.state.income_color;
+      if (income === undefined) {
+        return "grey";
+      }
+      if (income <= 30000) {
+        return colors[0];
+      } else if (income >= 60000) {
+        return colors[colors.length - 1];
+      } else {
+        return colors[(((income - 30000) / 2500) >> 0) + 1];
+      }
+    },
+    getPopulationFill(population) {
+      if (population === undefined) {
+        return "grey";
+      }
+      let L =
+        population > 360000
+          ? "50%"
+          : 90 - ((population / 36000) >> 0) * 4 + "%";
+      return `hsl(40deg 100% ${L})`;
+    },
+    getObesityFill(obesity, population) {
+      console.log(obesity);
+      if (obesity === undefined || obesity > population) {
+        return "grey";
+      }
+      let ratio = obesity / population;
+      let L = ratio > 0.35 ? 0.35 : 80 - (((ratio - 0.1) / 0.025) >> 0) * 4 + "%";
+      return `hsl(210deg 60% ${L})`;
+    },
+    setColor() {
+      this.createLegend();
+      this.map.data.setStyle((feature) => {
+        let color;
+        let population = feature.getProperty("population");
+        let income = feature.getProperty("income_2014");
+        let obesity = feature.getProperty("obesity_rate");
+        if (this.currentAurin === "Population") {
+          color = this.getPopulationFill(population);
+        } else if (this.currentAurin === "Income") {
+          color = this.getIncomeFill(income);
+        } else if (this.currentAurin === "Obesity") {
+          color = this.getObesityFill(obesity, population);
+        }
+        return {
+          fillColor: color,
+          fillOpacity: 0.7,
+          strokeColor: color,
+          strokeWeight: 1,
+        };
+      });
+    },
+    createLegend() {},
   },
 };
 </script>
@@ -294,7 +363,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 72px;
-  background: #fff;
+  background: #ffffff70;
+  backdrop-filter: blur(5px);
 }
 
 .filters {
@@ -304,5 +374,13 @@ export default {
 
 .filters > .input-group {
   width: 30%;
+}
+</style>
+<style>
+div.gm-style-mtc, button.gm-fullscreen-control {
+  top: 72px !important;
+}
+div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  bottom: 152px !important;
 }
 </style>
