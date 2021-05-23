@@ -16,11 +16,11 @@
       - pandas
       - urllib3
 
-# - name: upload zip file
-#   become: yes
-#   copy: 
-#     src: ../../../data.zip
-#     dest: /home/ubuntu/
+- name: upload zip file
+  become: yes
+  copy: 
+    src: ../../../data.zip
+    dest: /home/ubuntu/
 
 - name: unzip file and run backend 
   become: yes
