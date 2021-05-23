@@ -3,10 +3,10 @@ from flask import Flask, json, url_for, redirect, render_template, request, json
 app = Flask(__name__)
 
 
-@app.route("/map/<city>", methods=['GET'])
-def map(city):
-    filename = city + '.json'
-    directory = "backend"
+@app.route("/map/vic", methods=["GET"])
+def map_vic():
+    filename = "vic_plus.json"
+    directory = "aurin"
     try:
         with open(directory + '/' + filename) as f:
             jsonStr = json.load(f)
@@ -15,9 +15,17 @@ def map(city):
         return jsonify({"code": "异常", "message": "{}".format(e)})
 
 
-@app.route('/analysis/<city>', methods=['GET'])
-def analysis():
-    return 1
+@app.route("/map/nsw", methods=["GET"])
+
+def map_nsw():
+    filename = "nsw_plus.json"
+    directory = "aurin"
+    try:
+        with open(directory + '/' + filename) as f:
+            jsonStr = json.load(f)
+            return json.dumps(jsonStr)
+    except Exception as e:
+        return jsonify({"code": "异常", "message": "{}".format(e)})
 
 
 if __name__ == '__main__':
