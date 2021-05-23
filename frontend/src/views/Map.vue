@@ -1,6 +1,10 @@
 <template>
   <div class="datamap view">
     <div id="map"></div>
+    <div id="legend">
+      <div class="title">{{ legendTitle }}</div>
+      <div id="legendColors"></div>
+    </div>
     <div class="footer">
       <div class="container">
         <div class="filters">
@@ -60,6 +64,17 @@ export default {
       min: Infinity,
     };
   },
+  computed: {
+    legendTitle() {
+      if (this.currentAurin === "Income") {
+        return "Median Income ($)";
+      } else if (this.currentAurin === "Obesity") {
+        return "Obesity Rate (%)";
+      } else {
+        return this.currentAurin;
+      }
+    },
+  },
   beforeMount() {
     this.initData();
 
@@ -90,7 +105,10 @@ export default {
 
       map.data.addListener("mouseover", (event) => {
         map.data.revertStyle();
-        map.data.overrideStyle(event.feature, { strokeColor: 'grey', strokeWeight: 4 });
+        map.data.overrideStyle(event.feature, {
+          strokeColor: "grey",
+          strokeWeight: 4,
+        });
       });
       map.data.addListener("mouseout", () => {
         map.data.revertStyle();
@@ -100,6 +118,7 @@ export default {
   mounted() {
     this.currentScenario = document.getElementById("sel_sce").value;
     this.currentAurin = document.getElementById("sel_aur").value;
+    this.changeLegend();
   },
   methods: {
     initData() {
@@ -299,10 +318,8 @@ export default {
         return "grey";
       }
       let L =
-        population > 360000
-          ? "50%"
-          : 90 - ((population / 36000) >> 0) * 4 + "%";
-      return `hsl(40deg 100% ${L})`;
+        population > 360000 ? "50%" : 90 - ((population / 36000) >> 0) * 4;
+      return `hsl(40deg 100% ${L}%)`;
     },
     getObesityFill(obesity, population) {
       console.log(obesity);
@@ -310,11 +327,11 @@ export default {
         return "grey";
       }
       let ratio = obesity / population;
-      let L = ratio > 0.35 ? 0.35 : 80 - (((ratio - 0.1) / 0.025) >> 0) * 4 + "%";
-      return `hsl(210deg 60% ${L})`;
+      let L = ratio > 0.35 ? 0.35 : 80 - (((ratio - 0.1) / 0.025) >> 0) * 4;
+      return `hsl(210deg 60% ${L}%)`;
     },
     setColor() {
-      this.createLegend();
+      this.changeLegend();
       this.map.data.setStyle((feature) => {
         let color;
         let population = feature.getProperty("population");
@@ -335,7 +352,48 @@ export default {
         };
       });
     },
-    createLegend() {},
+    changeLegend() {
+      let dom = document.getElementById("legendColors");
+      dom.innerHTML = "";
+      // let height = dom.offsetHeight;
+      let colors;
+      if (this.currentAurin === "Income") {
+        colors = this.$store.state.income_color;
+        for (let i = 0; i < colors.length; i++) {
+          let value;
+          if (i === 0) {
+            value = "> 60000";
+          } else if (i === colors.length - 1) {
+            value = "< 30000";
+          } else {
+            value = 60000 - i * 2500;
+          }
+          this.createColor(`${colors[colors.length - i - 1]}b3`, value);
+        }
+      } else if (this.currentAurin === "Population") {
+        for (let i = 0; i < 10; i++) {
+          let value = 360000 - i * 36000;
+          let L = 90 - (value / 36000) * 4;
+          this.createColor(`hsl(40deg 100% ${L}% / 70%)`, value, "#666");
+        }
+      } else if (this.currentAurin === "Obesity") {
+        for (let i = 0; i < 10; i++) {
+          let value = 0.35 - i * 0.025;
+          let L = 80 - (value / 0.025) * 4;
+          this.createColor(`hsl(210deg 60% ${L}% / 70%)`, Math.round(value * 100), "#fff");
+        }
+      }
+    },
+    createColor(background, value, textColor) {
+      let dom = document.getElementById("legendColors");
+      let color = document.createElement("div");
+      color.className = "subColor";
+      color.style.background = background;
+      let textStyle = `style="color: ${textColor}; text-shadow:none"`
+      color.innerHTML = 
+        `<span class="value"${textColor ? textStyle : ""}>${value}<span>`;
+      dom.appendChild(color);
+    },
   },
 };
 </script>
@@ -375,12 +433,56 @@ export default {
 .filters > .input-group {
   width: 30%;
 }
+
+#legend {
+  position: absolute;
+  left: 10px;
+  bottom: 82px;
+  height: 430px;
+  width: 78px;
+  padding: 0.5em;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+}
+
+#legend .title {
+  font-size: 12px;
+  text-align: center;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+#legendColors {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+}
 </style>
 <style>
-div.gm-style-mtc, button.gm-fullscreen-control {
+div.gm-style-mtc,
+button.gm-fullscreen-control {
   top: 72px !important;
 }
 div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
   bottom: 152px !important;
+}
+
+#legendColors .subColor {
+  flex: 1;
+  display: inline-flex;
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+#legendColors .value {
+  color: #fff;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 </style>

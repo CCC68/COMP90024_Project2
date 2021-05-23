@@ -3,7 +3,7 @@
     <header id="nav" class="p-3 text-white d-flex">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center">
-          <span class="me-md-auto">Project Logo</span>
+          <span class="me-md-auto">TEAM 68</span>
           <ul class="nav">
             <router-link
               v-for="route in routes"
