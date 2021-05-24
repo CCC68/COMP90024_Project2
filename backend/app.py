@@ -16,7 +16,6 @@ def map_vic():
 
 
 @app.route("/map/nsw", methods=["GET"])
-
 def map_nsw():
     filename = "nsw_plus.json"
     directory = "aurin"
@@ -27,5 +26,30 @@ def map_nsw():
     except Exception as e:
         return jsonify({"code": "异常", "message": "{}".format(e)})
 
+
+
+@app.route("/analysis/vic", methods=["GET"])
+def analysis_vic():
+    filename = "vic_analysis.json"
+    directory = "aurin"
+    try:
+        with open(directory + '/' + filename) as f:
+            jsonStr = json.load(f)
+            return json.dumps(jsonStr)
+    except Exception as e:
+        return jsonify({"code": "异常", "message": "{}".format(e)})
+
+@app.route("/analysis/nsw", methods=["GET"])
+def analysis_nsw():
+    filename = "nsw_analysis.json"
+    directory = "aurin"
+    try:
+        with open(directory + '/' + filename) as f:
+            jsonStr = json.load(f)
+            return json.dumps(jsonStr)
+    except Exception as e:
+        return jsonify({"code": "异常", "message": "{}".format(e)})
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)       
