@@ -1,6 +1,10 @@
 <template>
   <div class="datamap view">
     <div id="map"></div>
+    <div id="legend">
+      <div class="title">{{ legendTitle }}</div>
+      <div id="legendColors"></div>
+    </div>
     <div class="footer">
       <div class="container">
         <div class="filters">
@@ -56,7 +60,20 @@ export default {
       currentPlace: null,
       currentScenario: null,
       currentAurin: null,
+      max: -Infinity,
+      min: Infinity,
     };
+  },
+  computed: {
+    legendTitle() {
+      if (this.currentAurin === "Income") {
+        return "Median Income ($)";
+      } else if (this.currentAurin === "Obesity") {
+        return "Obesity Rate (%)";
+      } else {
+        return this.currentAurin;
+      }
+    },
   },
   beforeMount() {
     this.initData();
@@ -67,25 +84,41 @@ export default {
     });
 
     loader.load().then(() => {
-      let map = new window.google.maps.Map(document.getElementById("map"), {
+      let google = window.google;
+      let map = new google.maps.Map(document.getElementById("map"), {
         // Map Options like 'center' & 'zoom'
+        styles: this.$store.state.silver_map,
+        streetViewControl: false,
       });
 
       this.map = window.map = map;
 
       this.switchPlace("vic");
+      this.setColor();
 
       this.infowindow = new window.google.maps.InfoWindow();
 
       map.data.addListener("click", (event) => {
-        console.log(event.feature.i);
+        // console.log(event.feature);
         this.createInfoWindow(map, event);
+      });
+
+      map.data.addListener("mouseover", (event) => {
+        map.data.revertStyle();
+        map.data.overrideStyle(event.feature, {
+          strokeColor: "grey",
+          strokeWeight: 4,
+        });
+      });
+      map.data.addListener("mouseout", () => {
+        map.data.revertStyle();
       });
     });
   },
   mounted() {
     this.currentScenario = document.getElementById("sel_sce").value;
     this.currentAurin = document.getElementById("sel_aur").value;
+    this.changeLegend();
   },
   methods: {
     initData() {
@@ -109,28 +142,21 @@ export default {
       let url = process.env.VUE_APP_BACKEND_BASE_URL + filename;
       this.currentPlace = this.places[n];
 
-      console.log(coords);
+      // console.log(coords);
       map.setZoom(zoom);
       map.setCenter(coords);
       map.data.loadGeoJson(url);
-      // map.data.forEach(function (feature) {
-      //   // map.data.remove(feature);
-
-      // });
     },
     switchScenario(e) {
       this.currentScenario = e.target.value;
       this.infowindow.close();
-      console.log("switch scenario", e);
     },
     switchAurin(e) {
       this.currentAurin = e.target.value;
       this.infowindow.close();
-      console.log("switch aurin", e);
+      this.setColor();
     },
     createInfoWindow(map, event) {
-      console.log(this.currentScenario);
-      console.log(this.currentAurin);
       let name = event.feature.getProperty(this.currentPlace.placeField);
 
       let bitcoin_tweets_count = event.feature.getProperty(
@@ -143,7 +169,7 @@ export default {
         "exercise_tweets_count"
       );
 
-      let income = event.feature.getProperty("income_2014");
+      let income_2014 = event.feature.getProperty("income_2014");
       let obesity = event.feature.getProperty("obesity_rate");
       let population = event.feature.getProperty("population");
 
@@ -172,19 +198,24 @@ export default {
       //   "</div>";
 
       let obesityPieChart = `<div id="obesityPieChart" style="height:240px;width:300px;"></div>`;
+      let bitcoin = `<div>Tweets related to Bitcoin: ${bitcoin_tweets_count}</div>`;
+      let traffic = `<div>Tweets related to traffic: ${traffic_tweets_count}</div>`;
+      let exrecise = `<div>Tweets related to exercise: ${exercise_tweets_count}</div>`;
+      let income = `<div>Income: ${income_2014}</div>`;
       let contentString = `<div id="content">
             <div id="siteNotice">${this.currentPlace.name}</div>
             <h5 id="firstHeading" class="firstHeading">${name}</h5>
             <div id="bodyContent">
-              <ul>
-                <li>Bitcoin Tweet Counts: ${bitcoin_tweets_count}</li>
-                <li>Traffic Tweet Counts: ${traffic_tweets_count}</li>
-                <li>Exercise Tweet Counts: ${exercise_tweets_count}</li>
-                <li>Income of 2014: ${income}</li>
-                <li>Obesity: ${obesity}</li>
-                <li>Population: ${population}</li>
-              </ul>
-              ${obesity && this.currentAurin === 'Obesity' ? obesityPieChart : ''}
+              ${this.currentScenario === "Bitcoin" ? bitcoin : ""}
+              ${this.currentScenario === "Traffic" ? traffic : ""}
+              ${this.currentScenario === "Exercise" ? exrecise : ""}
+              Population: ${population}
+              ${this.currentAurin === "Income" ? income : ""}
+              ${
+                obesity && this.currentAurin === "Obesity"
+                  ? obesityPieChart
+                  : ""
+              }
             </div>
            </div>`;
 
@@ -267,6 +298,100 @@ export default {
         }, 0);
       }
     },
+    getIncomeFill(income) {
+      let colors = this.$store.state.income_color;
+      if (income === undefined) {
+        return "grey";
+      }
+      if (income <= 30000) {
+        return colors[0];
+      } else if (income >= 60000) {
+        return colors[colors.length - 1];
+      } else {
+        return colors[(((income - 30000) / 2500) >> 0) + 1];
+      }
+    },
+    getPopulationFill(population) {
+      if (population === undefined) {
+        return "grey";
+      }
+      let L =
+        population > 360000 ? "50%" : 90 - ((population / 36000) >> 0) * 4;
+      return `hsl(40deg 100% ${L}%)`;
+    },
+    getObesityFill(obesity, population) {
+      // console.log(obesity);
+      if (obesity === undefined || obesity > population) {
+        return "grey";
+      }
+      let ratio = obesity / population;
+      let L = ratio > 0.35 ? 0.35 : 80 - (((ratio - 0.1) / 0.025) >> 0) * 4;
+      return `hsl(210deg 60% ${L}%)`;
+    },
+    setColor() {
+      this.changeLegend();
+      this.map.data.setStyle((feature) => {
+        let color;
+        let population = feature.getProperty("population");
+        let income = feature.getProperty("income_2014");
+        let obesity = feature.getProperty("obesity_rate");
+        if (this.currentAurin === "Population") {
+          color = this.getPopulationFill(population);
+        } else if (this.currentAurin === "Income") {
+          color = this.getIncomeFill(income);
+        } else if (this.currentAurin === "Obesity") {
+          color = this.getObesityFill(obesity, population);
+        }
+        return {
+          fillColor: color,
+          fillOpacity: 0.7,
+          strokeColor: color,
+          strokeWeight: 1,
+        };
+      });
+    },
+    changeLegend() {
+      let dom = document.getElementById("legendColors");
+      dom.innerHTML = "";
+      // let height = dom.offsetHeight;
+      let colors;
+      if (this.currentAurin === "Income") {
+        colors = this.$store.state.income_color;
+        for (let i = 0; i < colors.length; i++) {
+          let value;
+          if (i === 0) {
+            value = "> 60000";
+          } else if (i === colors.length - 1) {
+            value = "< 30000";
+          } else {
+            value = 60000 - i * 2500;
+          }
+          this.createColor(`${colors[colors.length - i - 1]}b3`, value);
+        }
+      } else if (this.currentAurin === "Population") {
+        for (let i = 0; i < 10; i++) {
+          let value = 360000 - i * 36000;
+          let L = 90 - (value / 36000) * 4;
+          this.createColor(`hsl(40deg 100% ${L}% / 70%)`, value, "#666");
+        }
+      } else if (this.currentAurin === "Obesity") {
+        for (let i = 0; i < 10; i++) {
+          let value = 0.35 - i * 0.025;
+          let L = 80 - (value / 0.025) * 4;
+          this.createColor(`hsl(210deg 60% ${L}% / 70%)`, Math.round(value * 100), "#fff");
+        }
+      }
+    },
+    createColor(background, value, textColor) {
+      let dom = document.getElementById("legendColors");
+      let color = document.createElement("div");
+      color.className = "subColor";
+      color.style.background = background;
+      let textStyle = `style="color: ${textColor}; text-shadow:none"`
+      color.innerHTML = 
+        `<span class="value"${textColor ? textStyle : ""}>${value}<span>`;
+      dom.appendChild(color);
+    },
   },
 };
 </script>
@@ -294,7 +419,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 72px;
-  background: #fff;
+  background: #ffffff70;
+  backdrop-filter: blur(5px);
 }
 
 .filters {
@@ -304,5 +430,57 @@ export default {
 
 .filters > .input-group {
   width: 30%;
+}
+
+#legend {
+  position: absolute;
+  left: 10px;
+  bottom: 82px;
+  height: 430px;
+  width: 78px;
+  padding: 0.5em;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+}
+
+#legend .title {
+  font-size: 12px;
+  text-align: center;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+#legendColors {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+}
+</style>
+<style>
+div.gm-style-mtc,
+button.gm-fullscreen-control {
+  top: 72px !important;
+}
+div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  bottom: 152px !important;
+}
+
+#legendColors .subColor {
+  flex: 1;
+  display: inline-flex;
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+#legendColors .value {
+  color: #fff;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 </style>
