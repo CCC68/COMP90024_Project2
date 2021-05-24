@@ -3,53 +3,52 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
+directory = "/home/ubuntu/data"
+# directory = "aurin"
+
 @app.route("/map/vic", methods=["GET"])
 def map_vic():
     filename = "vic_plus.json"
-    directory = "aurin"
     try:
         with open(directory + '/' + filename) as f:
             jsonStr = json.load(f)
             return json.dumps(jsonStr)
     except Exception as e:
-        return jsonify({"code": "异常", "message": "{}".format(e)})
+        return jsonify({"code": "Error", "message": "{}".format(e)})
 
 
 @app.route("/map/nsw", methods=["GET"])
 def map_nsw():
     filename = "nsw_plus.json"
-    directory = "aurin"
     try:
         with open(directory + '/' + filename) as f:
             jsonStr = json.load(f)
             return json.dumps(jsonStr)
     except Exception as e:
-        return jsonify({"code": "异常", "message": "{}".format(e)})
+        return jsonify({"code": "Error", "message": "{}".format(e)})
 
 
 
 @app.route("/analysis/vic", methods=["GET"])
 def analysis_vic():
     filename = "vic_analysis.json"
-    directory = "aurin"
     try:
         with open(directory + '/' + filename) as f:
             jsonStr = json.load(f)
             return json.dumps(jsonStr)
     except Exception as e:
-        return jsonify({"code": "异常", "message": "{}".format(e)})
+        return jsonify({"code": "Error", "message": "{}".format(e)})
 
 @app.route("/analysis/nsw", methods=["GET"])
 def analysis_nsw():
     filename = "nsw_analysis.json"
-    directory = "aurin"
     try:
         with open(directory + '/' + filename) as f:
             jsonStr = json.load(f)
             return json.dumps(jsonStr)
     except Exception as e:
-        return jsonify({"code": "异常", "message": "{}".format(e)})
+        return jsonify({"code": "Error", "message": "{}".format(e)})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)       
+    app.run(host='0.0.0.0', debug=True)       

@@ -99,7 +99,7 @@ export default {
       this.infowindow = new window.google.maps.InfoWindow();
 
       map.data.addListener("click", (event) => {
-        console.log(event.feature);
+        // console.log(event.feature);
         this.createInfoWindow(map, event);
       });
 
@@ -142,7 +142,7 @@ export default {
       let url = process.env.VUE_APP_BACKEND_BASE_URL + filename;
       this.currentPlace = this.places[n];
 
-      console.log(coords);
+      // console.log(coords);
       map.setZoom(zoom);
       map.setCenter(coords);
       map.data.loadGeoJson(url);
@@ -157,8 +157,6 @@ export default {
       this.setColor();
     },
     createInfoWindow(map, event) {
-      console.log(this.currentScenario);
-      console.log(this.currentAurin);
       let name = event.feature.getProperty(this.currentPlace.placeField);
 
       let bitcoin_tweets_count = event.feature.getProperty(
@@ -322,7 +320,7 @@ export default {
       return `hsl(40deg 100% ${L}%)`;
     },
     getObesityFill(obesity, population) {
-      console.log(obesity);
+      // console.log(obesity);
       if (obesity === undefined || obesity > population) {
         return "grey";
       }

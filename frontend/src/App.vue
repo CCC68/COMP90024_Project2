@@ -30,7 +30,7 @@ export default {
   },
   beforeMount() {
     this.routes = this.$router.options.routes;
-    console.log(this.$router)
+    // console.log(this.$router)
   },
 };
 </script>

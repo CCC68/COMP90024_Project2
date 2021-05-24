@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
   #home {
-    background: url('../assets/melbourne.jpeg');
+    background: url('../assets/melbourne_optimized.jpeg');
     background-size: cover;
   }
 </style>

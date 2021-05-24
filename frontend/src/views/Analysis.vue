@@ -42,12 +42,12 @@ export default {
   },
   methods: {
     fetchData(state) {
-      fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}${state}_analysis.json`)
+      fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}analysis/${state}`)
         .then(function (response) {
           return response.json();
         })
         .then((jsonData) => {
-          console.log(jsonData);
+          // console.log(jsonData);
           this[state] = jsonData.features;
           this.initBarChart(state, "population");
           this.initBarChart(state, "income");

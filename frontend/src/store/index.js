@@ -9,7 +9,7 @@ export default createStore({
         placeField: 'vic_lga__3',
         coords: { lat: -36.13615274670763, lng: 144.75151428066573 },
         zoom: 7,
-        filename: 'vic_plus.json'
+        filename: 'map/vic'
       }, 
       nsw: {
         n: 'nsw',
@@ -17,7 +17,7 @@ export default createStore({
         placeField: 'nsw_lga__3',
         coords: { lat: -32.17623298515995, lng: 146.70449300679843 },
         zoom: 6,
-        filename: 'nsw_plus.json'
+        filename: 'map/nsw'
       }
     },
     scenarios: ['Bitcoin', 'Exercise', 'Traffic'],
@@ -243,7 +243,7 @@ export default createStore({
         ]
       }
     ],
-    
+
   },
   mutations: {
   },
