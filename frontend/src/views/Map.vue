@@ -1,3 +1,8 @@
+// Hanzhen Yang 1070951, 
+// Hanzhong Wang, 1029740,
+// Quan Zhou 1065302, 
+// Yuhang Xie 1089250, 
+// Ze Liu 1073628
 <template>
   <div class="datamap view">
     <div id="map"></div>
@@ -84,6 +89,7 @@ export default {
     });
 
     loader.load().then(() => {
+      console.log(process.env.VUE_APP_GOOGLE_MAP_KEY);
       let google = window.google;
       let map = new google.maps.Map(document.getElementById("map"), {
         // Map Options like 'center' & 'zoom'

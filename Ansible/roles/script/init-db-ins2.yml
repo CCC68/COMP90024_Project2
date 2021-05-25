@@ -14,5 +14,5 @@ services:
       - COUCHDB_USER=adm1n_c0uchd6
       - COUCHDB_PASSWORD=_gr0up68H1_
       - NODENAME=172.26.132.118
-      - COUCHDB_COOKIE=fckcouchdb
+      - COUCHDB_COOKIE=couchdbcookie
     container_name: couch_manager_ins2

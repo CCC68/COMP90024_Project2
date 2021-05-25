@@ -1,3 +1,8 @@
+// Hanzhen Yang 1070951, 
+// Hanzhong Wang, 1029740,
+// Quan Zhou 1065302, 
+// Yuhang Xie 1089250, 
+// Ze Liu 1073628
 <template>
   <div class="home view" id="home">
     <div class="jumbotron">
