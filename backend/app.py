@@ -1,3 +1,9 @@
+# Hanzhen Yang 1070951, 
+# Hanzhong Wang, 1029740,
+# Quan Zhou 1065302, 
+# Yuhang Xie 1089250, 
+# Ze Liu 1073628
+
 from flask import Flask, json, url_for, redirect, render_template, request, jsonify
 from flask_cors import CORS
 app = Flask(__name__)
